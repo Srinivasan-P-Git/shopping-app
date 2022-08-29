@@ -6,11 +6,11 @@ import Modal from '../../components/modal/modal.component';
 import { ModalContext } from '../../context/modal/modal.context';
 
 const Home = () => {
-    const { isModalOpen } = useContext(ModalContext);
+    const { isModalOpen, modalContent } = useContext(ModalContext);
     return (
         <Fragment>
             {
-                isModalOpen && <Modal>I'm From Modal</Modal>
+                isModalOpen && <Modal>{modalContent}</Modal>
             }
             <NavBar />
             <Outlet />
