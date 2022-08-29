@@ -7,6 +7,7 @@ import App from './App';
 import { UserContextProvider } from './context/user/user.context';
 import { ModalContextProvider } from './context/modal/modal.context';
 import { ProductsContextProvider } from './context/products/products.context';
+import { CartDropDownContextProvider } from './context/cart-dropdown/cart-dropdown.context';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
@@ -14,9 +15,11 @@ root.render(
         <BrowserRouter>
             <UserContextProvider>
                 <ProductsContextProvider>
-                    <ModalContextProvider>
-                        <App />
-                    </ModalContextProvider>
+                    <CartDropDownContextProvider>
+                        <ModalContextProvider>
+                            <App />
+                        </ModalContextProvider>
+                    </CartDropDownContextProvider>
                 </ProductsContextProvider>
             </UserContextProvider>
         </BrowserRouter>

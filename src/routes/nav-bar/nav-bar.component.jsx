@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/user/user.context';
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import { ReactComponent as CrwnLogo } from './../../assets/crown.svg';
+import CartDropDown from '../../components/cart-dropdown/cart-dropdown.component';
+import { CartDropDownContext } from '../../context/cart-dropdown/cart-dropdown.context';
 
 import './nav-bar.styles.scss';
 
 const NavBar = () => {
     const user = useContext(UserContext);
+    const { isCartDropDownOpen } = useContext(CartDropDownContext);
     return (
         <Fragment>
             <div className='navigation'>
@@ -34,6 +37,7 @@ const NavBar = () => {
                     }
                     <CartIcon />
                 </div>
+                {isCartDropDownOpen && <CartDropDown />}
             </div>
         </Fragment>
     );
