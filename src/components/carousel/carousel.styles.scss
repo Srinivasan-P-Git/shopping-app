@@ -1,0 +1,78 @@
+$percent_100: 100%;
+
+.carousel {
+    width: 400px;
+    height: 200px;
+}
+
+.carousel-container {
+    width: $percent_100;
+    height: $percent_100;
+    position: relative;
+    
+    .carousel-item {
+        width: $percent_100;
+        height: $percent_100;
+        display: flex;
+        position: absolute;
+        opacity: 0;
+        overflow: hidden;
+        border-radius: 10px;
+        transform: scale(0.9);
+        transition: all 0.5s ease-in-out;
+        -webkit-box-shadow: 7px 7px 14px 4px rgba(189, 176, 189, 1);
+        -moz-box-shadow: 7px 7px 14px 4px rgba(189, 176, 189, 1);
+        box-shadow: 7px 7px 14px 4px rgba(189, 176, 189, 1);
+
+        .carousel-item-image {
+            width: $percent_100;
+        }
+
+        .carousel-item-title {
+            width: $percent_100;
+            height: $percent_100;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            left: 20px;
+            position: absolute;
+        }
+    }
+
+    .carousel-item-active {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .carousel-navigate {
+        position: absolute;
+        display: flex;
+        width: $percent_100;
+        height: $percent_100;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+
+        .navigate-icon {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .carousel-progress {
+        position: absolute;
+        display: flex;
+        width: $percent_100;
+        height: $percent_100;
+        justify-content: center;
+        align-items: flex-end;
+        .carousel-progress-icon {
+            transform: scale(0.5);
+            transition: all 0.5s ease-in-out;
+        }
+        .carousel-progress-icon-active {
+            transform: scale(1);
+        }
+    }
+}

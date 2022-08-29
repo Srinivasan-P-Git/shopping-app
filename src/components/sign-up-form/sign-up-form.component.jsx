@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+import FormInput from "../form-input/form-input.component";
+import { UserContext } from "../../context/user/user.context";
 
 import './sign-up-form.styles.scss';
 
@@ -20,11 +21,13 @@ const SignUpForm = () => {
         setFormFields({ ...formFields, [e.target.name]: e.target.value })
     }
 
+    const user = useContext(UserContext);
+
     return (
         <div className="sign-up-container">
             <h2>Don't have an account?</h2>
             <span>Sign up with your email</span>
-            <form onSubmit={(e) => { e.preventDefault(); console.dir(formFields) }}>
+            <form onSubmit={(e) => { e.preventDefault(); user.setCurrentUser(formFields.displayName) }}>
                 <FormInput
                     labelOptions={{ label: "Display Name" }}
                     inputOptions={{ required: true, type: "text", name: "displayName", value: displayName, onChange: onChangeHandler }}

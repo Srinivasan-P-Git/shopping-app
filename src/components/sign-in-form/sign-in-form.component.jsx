@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
 import "./sign-in-form.styles.scss";
+import { UserContext } from "../../context/user/user.context";
 
 const defaultFormFields = {
     email: '',
@@ -13,15 +14,21 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+    const user = useContext(UserContext);
     const onChangeHandler = e => {
         setFormFields({ ...formFields, [e.target.name]: e.target.value });
+    }
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+        user.setCurrentUser(formFields.email);
+        setFormFields(defaultFormFields);
     }
 
     return (
         <div className="sign-in-container">
             <h2>Already have an account?</h2>
             <span>Sign in with your email and password</span>
-            <form onSubmit={() => { }}>
+            <form onSubmit={onFormSubmit}>
                 <FormInput
                     labelOptions={{ label: "Email ID" }}
                     inputOptions={{ type: "email", required: true, name: "email", onChange: onChangeHandler, value: email }}
