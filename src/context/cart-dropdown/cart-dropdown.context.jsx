@@ -5,7 +5,9 @@ export const CartDropDownContext = createContext({
     toggleCartDropDown: () => { },
     cartItems: [],
     addItemToCart: () => { },
-    totalItemsInCart: 0
+    removeItemFromCart: () => { },
+    totalItemsInCart: 0,
+    totalCostOfItemsInCart: 0
 });
 
 const addCartItem = (cartItems, productToAdd) => {
@@ -19,22 +21,42 @@ const addCartItem = (cartItems, productToAdd) => {
     }
 }
 
+const removeCartItem = (cartItems, productToRemove, quantity) => {
+    return cartItems.reduce((accum, cartItem) => {
+        if (cartItem.id === productToRemove.id) {
+            let modifiedCartItem = { ...cartItem, quantity: cartItem.quantity - quantity };
+            if (modifiedCartItem.quantity > 0) accum.push(modifiedCartItem);
+        } else accum.push(cartItem);
+        return accum;
+    }, []);
+}
+
 export const CartDropDownContextProvider = ({ children }) => {
     const [isCartDropDownOpen, toggleCartDropDown] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalItemsInCart, setTotalItemsInCart] = useState(0);
+    const [totalCostOfItemsInCart, setTotalCostOfItemsInCart] = useState(0);
 
     useEffect(() => {
         let count = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
         setTotalItemsInCart(count);
-    },[cartItems]);
+    }, [cartItems]);
+
+    useEffect(() => {
+        let totalCost = cartItems.reduce((total, cartItem) => total + cartItem.price * cartItem.quantity, 0);
+        setTotalCostOfItemsInCart(totalCost);
+    }, [cartItems]);
 
     const addItemToCart = (productToAdd) => {
         setCartItems(addCartItem(cartItems, productToAdd));
     }
 
+    const removeItemFromCart = (productToRemove, quantity = 1) => {
+        setCartItems(removeCartItem(cartItems, productToRemove, quantity));
+    }
+
     return (
-        <CartDropDownContext.Provider value={{ isCartDropDownOpen, toggleCartDropDown, cartItems, addItemToCart, totalItemsInCart }}>
+        <CartDropDownContext.Provider value={{ isCartDropDownOpen, toggleCartDropDown, cartItems, addItemToCart, totalItemsInCart, removeItemFromCart, totalCostOfItemsInCart }}>
             {children}
         </CartDropDownContext.Provider>
     )
