@@ -1,53 +1,83 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
-import { UserContext } from "../../context/user/user.context";
+import { setCurrentUser } from "./../../store/user/user.action";
 
-import './sign-up-form.styles.scss';
+import "./sign-up-form.styles.scss";
 
 const defaultFormFields = {
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+  displayName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const SignUpForm = () => {
-    const [formFields, setFormFields] = useState(defaultFormFields);
-    const { displayName, email, password, confirmPassword } = formFields;
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { displayName, email, password, confirmPassword } = formFields;
 
-    const onChangeHandler = e => {
-        setFormFields({ ...formFields, [e.target.name]: e.target.value })
-    }
+  const onChangeHandler = (e) => {
+    setFormFields({ ...formFields, [e.target.name]: e.target.value });
+  };
 
-    const user = useContext(UserContext);
+  const dispatch = useDispatch();
 
-    return (
-        <div className="sign-up-container">
-            <h2>Don't have an account?</h2>
-            <span>Sign up with your email</span>
-            <form onSubmit={(e) => { e.preventDefault(); user.setCurrentUser(formFields.displayName) }}>
-                <FormInput
-                    labelOptions={{ label: "Display Name" }}
-                    inputOptions={{ required: true, type: "text", name: "displayName", value: displayName, onChange: onChangeHandler }}
-                />
-                <FormInput
-                    labelOptions={{ label: "Email ID" }}
-                    inputOptions={{ required: true, type: "email", name: "email", value: email, onChange: onChangeHandler }}
-                />
-                <FormInput
-                    labelOptions={{ label: "Password" }}
-                    inputOptions={{ required: true, type: "password", name: "password", value: password, onChange: onChangeHandler }}
-                />
-                <FormInput
-                    labelOptions={{ label: "Confirm Password" }}
-                    inputOptions={{ required: true, type: "password", name: "confirmPassword", value: confirmPassword, onChange: onChangeHandler }}
-                />
-                <Button type={"submit"}>Sign Up</Button>
-            </form>
-        </div>
-    )
-}
+  return (
+    <div className="sign-up-container">
+      <h2>Don't have an account?</h2>
+      <span>Sign up with your email</span>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(setCurrentUser(formFields.displayName));
+        }}
+      >
+        <FormInput
+          labelOptions={{ label: "Display Name" }}
+          inputOptions={{
+            required: true,
+            type: "text",
+            name: "displayName",
+            value: displayName,
+            onChange: onChangeHandler,
+          }}
+        />
+        <FormInput
+          labelOptions={{ label: "Email ID" }}
+          inputOptions={{
+            required: true,
+            type: "email",
+            name: "email",
+            value: email,
+            onChange: onChangeHandler,
+          }}
+        />
+        <FormInput
+          labelOptions={{ label: "Password" }}
+          inputOptions={{
+            required: true,
+            type: "password",
+            name: "password",
+            value: password,
+            onChange: onChangeHandler,
+          }}
+        />
+        <FormInput
+          labelOptions={{ label: "Confirm Password" }}
+          inputOptions={{
+            required: true,
+            type: "password",
+            name: "confirmPassword",
+            value: confirmPassword,
+            onChange: onChangeHandler,
+          }}
+        />
+        <Button type={"submit"}>Sign Up</Button>
+      </form>
+    </div>
+  );
+};
 
 export default SignUpForm;

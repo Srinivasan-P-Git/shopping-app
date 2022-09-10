@@ -1,21 +1,19 @@
-import { useContext } from 'react';
+import { useSelector } from "react-redux";
 
-import { ProductsContext } from '../../context/products/products.context';
-import ProductCard from '../../components/product-card/product-card.component';
+import { selectProducts } from "./../../store/products/products.selector";
+import ProductCard from "../../components/product-card/product-card.component";
 
-import './shop.styles.scss';
+import "./shop.styles.scss";
 
 const Shop = () => {
-    const { products } = useContext(ProductsContext);
-    return (
-        <div className='products-container'>
-            {
-                products.map(product => (
-                    <ProductCard key={product.id} product={product} />
-                ))
-            }
-        </div>
-    )
-}
+  const products = useSelector(selectProducts);
+  return (
+    <div className="products-container">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  );
+};
 
 export default Shop;
